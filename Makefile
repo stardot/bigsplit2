@@ -28,7 +28,7 @@
 #
 # Generic options:
 #
-MKDIR   = cdir
+MKDIR   = do mkdir -p
 AS      = objasm
 CC      = cc
 CMHG    = cmhg
@@ -110,6 +110,11 @@ test: all
 	abs.CRC Test.Image
 	@echo
 	@echo Done.
+
+install: ${TARGET} dirs
+	${MKDIR} ${INSTDIR}.Docs
+	${CP} abs.${COMPONENT} ${INSTDIR}.${COMPONENT} ${CPFLAGS}
+	@echo ${COMPONENT}: tool installed in library
 
 clean:
 	${WIPE} o ${WFLAGS}
