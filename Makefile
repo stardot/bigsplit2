@@ -39,6 +39,7 @@ WIPE    = -wipe
 CD	= dir
 DEFMOD  = DefMod
 AR	= LibFile
+CHMOD	= access
 
 OPTIONS = -DENSURE_LINE
 
@@ -48,6 +49,7 @@ CMHGFLAGS = -p ${DFLAGS} ${INCLUDES}
 CPFLAGS = ~cfr~v
 WFLAGS  = ~c~vr
 DFLAGS  =
+CHMODFLAGS = RW/R
 #
 # Libraries
 #
@@ -131,14 +133,15 @@ dirs:
 #
 abs.${COMPONENT}D: ${DOBJS} ${CLIB}
 	${LD} -o $@ ${DOBJS} ${CLIB}
+	${CHMOD} $@ ${CHMODFLAGS}
 
 abs.${COMPONENT}: ${OBJS} ${CLIB}
 	${LD} -o $@ ${OBJS} ${CLIB}
+	${CHMOD} $@ ${CHMODFLAGS}
 
 abs.CRC: o.CRC ${CLIB}
 	${LD} -o $@ o.CRC ${CLIB}
-
-
+	${CHMOD} $@ ${CHMODFLAGS}
 
 #
 # Dynamic dependencies:
