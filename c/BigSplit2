@@ -29,6 +29,8 @@
 #define CRC_MAGIC 0xA001
 /* I don't think you'll want to change this one */
 #define CRC_TABLE_SIZE (1<<8)
+/* File buffer size for read and write */
+#define FILEBUFFERSIZE (256*1024)
 
 #ifdef __riscos
 typedef unsigned int uint32;
@@ -162,6 +164,10 @@ static void add_module(struct file_info *finfo, char *mod, int kernel, int hal, 
     fprintf(stderr,"%s: fopen(%s): %s\n",progname, mod, strerror(errno));
     exit(1);
   };
+  if(setvbuf(in, NULL, _IOFBF, FILEBUFFERSIZE)) {
+    fprintf(stderr,"%s: setvbuf(%s,%d)\n",progname, mod, FILEBUFFERSIZE);
+    exit(1);
+  }
   if(fseek(in,0,SEEK_END)) {
     fprintf(stderr,"%s: fseek(%s,SEEK_END): %s\n",progname, mod,
             strerror(errno));
@@ -408,6 +414,10 @@ int main(int argc,char **argv) {
     fprintf(stderr,"%s: Could not open image file %s\n",progname,image);
     exit(1);
   };
+  if(setvbuf(finfo->fi_f, NULL, _IOFBF, FILEBUFFERSIZE)) {
+    fprintf(stderr,"%s: setvbuf(%s,%d)\n",progname, image, FILEBUFFERSIZE);
+    exit(1);
+  }
 
   write_modules(modlist, finfo, finfo->fi_imagesize-endblock);
 
