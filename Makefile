@@ -28,14 +28,14 @@
 #
 # Generic options:
 #
-MKDIR   = do mkdir -p
+MKDIR   = cdir
 AS      = objasm
 CC      = cc
 CMHG    = cmhg
 CP      = copy
 LD      = link
 RM      = remove
-WIPE    = x wipe
+WIPE    = wipe
 CD	= dir
 DEFMOD  = DefMod
 AR	= LibFile
